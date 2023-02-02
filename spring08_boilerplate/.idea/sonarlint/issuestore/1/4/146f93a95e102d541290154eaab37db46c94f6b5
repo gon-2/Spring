@@ -1,0 +1,19 @@
+
+
+java:S1186<"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(áÒê¸8…ŠñÓà0
+£
+java:S1186~"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ë¸Üşÿÿÿÿ8†ŠñÓà0
+¤
+java:S1186‹"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(çäûûÿÿÿÿ8†ŠñÓà0
+>
+java:S1116="Remove this empty statement.(ôŸìúÿÿÿÿ8ŠŠñÓà0
+T	java:S106H"9Replace this use of System.out or System.err by a logger.(ïâğg8ŒŠñÓà0
+b
+java:S2441T"@Make "SignUpForm" serializable or don't store it in the session.(áÇÅÁÿÿÿÿÿ8ŠñÓà0
+X	java:S125]"<This block of commented-out lines of code should be removed.(Š•èê8ŠñÓà0
+W	java:S125l"<This block of commented-out lines of code should be removed.(ôæ¹H8‘ŠñÓà0
+>
+java:S1116"Remove this empty statement.(ôŸìúÿÿÿÿ8’ŠñÓà0
+[	java:S106…"9Replace this use of System.out or System.err by a logger.(‰–êÀúÿÿÿÿ8“ŠñÓà0
+_
+java:S2441—"<Make "Member" serializable or don't store it in the session.(Íÿÿ ÿÿÿÿÿ8–ŠñÓà0

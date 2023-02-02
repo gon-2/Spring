@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace : 생성 될 프록시 객체의 타입  -->
+<mapper namespace="com.mc.mvc.Myabtis">
+	
+	<select id="selectOne" resultType="com.mc.mvc.member.dto.Member">
+		select * from member where user_id = #{userId}	
+	</select>
+	
+	<select id="selectList" resultType="Member">
+		select * from member;
+	</select>
+
+	<select id="selectListWithDTO" resultType="Member">
+		select * from member 
+		where 
+		user_id = #{userId} 
+		and password = #{password}
+	</select>
+	
+	<select id="selectListWithMap" resultType="Member">
+		select * from member 
+		where 
+		user_id = #{userId} 
+		and password = #{password}
+	</select>
+	
+	<select id="selectListToMap" resultType="map">
+		select *
+		from member
+		join rent_master using(user_id)
+	</select>
+	
+	<insert id="insertWithDTO">
+		insert into member(user_id, password, tell, email)
+		values(#{userId}, #{password}, #{tell}, #{email})
+	</insert>
+	
+	<insert id="insertWithMap">
+		insert into rent_master(user_id, title, rent_book_cnt)
+		values(#{member.userId}, #{title}, #{rentBookCnt})
+	</insert>
+	
+	<insert id="insertRent" useGeneratedKeys="true" keyProperty="rmIdx"> 
+		insert into rent_master(user_id, title, rent_book_cnt)
+		values(#{userId}, #{title}, #{rentBookCnt})
+	</insert>
+	
+	<insert id="insertRentBook" useGeneratedKeys="true" keyProperty="rbIdx">
+		insert into rent_book(rm_idx, bk_idx, return_date)
+		values(#{rmIdx}, #{bkIdx}, #{returnDate})
+	</insert>
+	
+	<insert id="insertRentHistory">
+		insert into rent_history(rm_idx, rb_idx, bk_idx, state)
+		values(#{rmIdx}, #{rbIdx}, #{bkIdx}, #{state})
+	</insert>
+	
+	<update id="update">
+		update member set password = #{password}
+		where user_id = #{userId}
+	</update>
+	
+	<delete id="delete">
+		delete from member where user_id = #{userId}
+	</delete>
+	
+	<select id="dynamicChoose" resultType="Book">
+		select * from book
+		where
+		<choose>
+			<when test="filter == 'title'">
+				title like concat('%',#{keyword},'%')
+			</when>
+			<otherwise>
+				author like concat('%',#{keyword},'%')
+			</otherwise>
+		</choose>
+		
+		<!-- <if test="filter == 'title'">
+			title like concat('%',#{keyword},'%')
+		</if>
+		
+		<if test="filter == 'author'">
+			author like concat('%',#{keyword},'%')
+		</if> -->
+	</select>
+	
+	<update id="dynamicSet">
+		update member
+		<set>
+			<if test="password != null">
+				password = #{password}
+			</if>
+			<if test="password != null">
+				,password = #{password}
+			</if>
+			<if test="tell != null">
+				,tell = #{tell}
+			</if>
+			<if test="email != null">
+				,email = #{email}
+			</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+	
+	<resultMap type="map" id="rentdata">
+		<!-- 
+			column : resultSet의 컬럼
+			javaType : 해당 컬럼의 값을 받을 자바의 타입
+			property : 해당 컬럼의 값에 접근하기 위함 map의 key값
+		 -->
+		 <result column="rm_idx"  javaType="string" property="rmIdx"/>
+		 <result column="rb_idx"  javaType="string" property="rbIdx"/>
+		 <result column="user_id"  javaType="string" property="userId"/>
+		 <result column="return_date"  javaType="date" property="returnDate"/>
+		 <result column="rm.title"  javaType="string"/>
+		 <result column="isbn"  javaType="string"/>
+		 <result column="rent_book_cnt"  javaType="int" property="rentBookCnt"/>
+	</resultMap>
+	
+	<select id="resultMap" resultType="map">
+		select
+			rm_idx, rb_idx, user_id,return_date, rm.title,
+			isbn, rent_book_cnt
+		from rent_master rm
+		join rent_book using(rm_idx)
+		join book using(bk_idx)
+		where rb_idx = #{rbIdx} 
+	</select>
+	
+
+
+</mapper>
